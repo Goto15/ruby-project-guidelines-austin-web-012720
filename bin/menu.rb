@@ -143,5 +143,3 @@ def add_items(user_id)
     menu.choice ""
   end
 end
-
-startmenu()
