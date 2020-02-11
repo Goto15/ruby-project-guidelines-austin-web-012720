@@ -21,8 +21,8 @@ end
 
 def login_prompt()
   login = TTY::Prompt.new()
-  user = login.ask("Name: ", required: true)
-  user  = User.all.find(user)
+  username = login.ask("Name: ", required: true)
+  user = User.where(name: username)[0]
   user_menu(user.id)
 end
 
