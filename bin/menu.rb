@@ -76,7 +76,7 @@ def item_menu(user_id)
 
   case ans
   when 1
-    item = prompt.ask("Enter Item Name: ", required: true)
+    item = i_menu.ask("Enter Item Name: ", required: true)
     type_menu = TTY::Prompt.new
     array = type_menu.multiselect("Type", required: true) do |type|
       menu.choice "Daily",
