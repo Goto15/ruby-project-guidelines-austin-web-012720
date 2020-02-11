@@ -7,5 +7,5 @@ Event.create(day_id: 2, name: "bus", date: "tomorrow")
 Day.create(user_id: 1, date: "today")
 Day.create(user_id: 2, date: "tomorrow")
 
-Item.create(day_id: 1, name: "rain coat", weather: "Rain")
-Item.create(day_id: 1, name: "snow shoes", weather: "Snow")
+Item.create(day_id: 1, user_id: 1, name: "rain coat", weather: "Rain")
+Item.create(day_id: 1, user_id: 2, name: "snow shoes", weather: "Snow")
