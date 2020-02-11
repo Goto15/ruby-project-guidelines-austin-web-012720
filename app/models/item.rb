@@ -1,3 +1,3 @@
 class Item < ActiveRecord::Base
-    belongs_to :itineraries
+    belongs_to :day
 end

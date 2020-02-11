@@ -1,7 +1,5 @@
 class User < ActiveRecord::Base
-    has_many :itineraries
-    has_many :events
-    has_many :events, through: :itinerary
-    has_many :items
-    has_many :items, through: :itinerary
+    has_many :days
+    has_many :events, through: :days
+    has_many :items, through: :days
 end
