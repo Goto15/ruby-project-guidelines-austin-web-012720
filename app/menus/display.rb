@@ -1,6 +1,6 @@
 require "tty-box"
 #require 'terminfo'
-require './models'
+#require './models'
 
 def display_items(user_id)
   #user = User.where(id: user_id)

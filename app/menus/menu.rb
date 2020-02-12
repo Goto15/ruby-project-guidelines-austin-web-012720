@@ -1,5 +1,6 @@
 require_relative '../../config/environment'
 require_relative '../weather.rb'
+require_relative './item_menu.rb'
 
 # ------ More Specific Menus ------ #
 require_relative './item_menu.rb'
@@ -7,7 +8,7 @@ require 'tty-prompt'
 
 def startmenu()
   ans =   TTY::Prompt.new.select("Welcome to Day Planner") do |menu|
-            menu.choice "Login" 
+            menu.choice "Login"
             menu.choice "Sign Up"
           end
 
@@ -24,7 +25,7 @@ def login_prompt()
   if (User.where(name: username).length != 0)
     user = User.where(name: username)[0]
     user_menu(user.id)
-  else 
+  else
     puts "Your account does not exist. Did you mispell it?"
     ans =   TTY::Prompt.new.select("") do |menu|
       menu.choice "Sign Up"
@@ -129,7 +130,7 @@ def delete_event_menu(user_id)
   events = Event.all.map do |event|
     event.name
   end
-  
+
   to_delete = TTY::Prompt.new.multi_select("Your items: ", events)
 
   to_delete.each do |event|
@@ -208,7 +209,7 @@ def delete_day_menu(user_id)
   days =  Day.all.map do |day|
             day.date
           end.uniq
-  
+
   to_delete = TTY::Prompt.new.multi_select("Your days: ", days)
 
   to_delete.each do |day|

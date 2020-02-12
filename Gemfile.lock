@@ -32,7 +32,6 @@ GEM
     rack-protection (2.0.7)
       rack
     require_all (3.0.0)
-    ruby-terminfo (0.1.1)
     sinatra (2.0.7)
       mustermann (~> 1.0)
       rack (~> 2.0)
@@ -77,7 +76,6 @@ PLATFORMS
 DEPENDENCIES
   pry
   require_all
-  ruby-terminfo
   sinatra-activerecord
   sqlite3
   tty-box
