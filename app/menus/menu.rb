@@ -2,8 +2,9 @@ require_relative '../../config/environment'
 require_relative '../weather.rb'
 require_relative './item_menu.rb'
 
-# ------ More Specific Menus ------ #
+# ------ Specific Menus ------ #
 require_relative './item_menu.rb'
+require_relative './event_menu.rb'
 require 'tty-prompt'
 
 def startmenu()
@@ -96,6 +97,7 @@ def user_menu(user_id)
   end
 end
 
+<<<<<<< HEAD
 def event_menu(user_id)
   ans = TTY::Prompt.new.select("EVENT MENU: ", required: true) do |menu|
     menu.choice "Add"
@@ -152,6 +154,8 @@ def delete_all_events_menu(user_id)
   event_menu(user_id)
 end
 
+=======
+>>>>>>> bbeaa4c19483536889d0505b0af07544d054746c
 def today_formatted()
   month = Time.new.month.to_s
   day = Time.new.day.to_s
