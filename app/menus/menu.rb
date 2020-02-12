@@ -3,14 +3,16 @@ require_relative '../weather.rb'
 require_relative './item_menu.rb'
 
 # ------ Specific Menus ------ #
-require_relative './item_menu.rb'
+require_relative './day_menu.rb'
 require_relative './event_menu.rb'
+require_relative './item_menu.rb'
 require 'tty-prompt'
 
 def startmenu()
   ans =   TTY::Prompt.new.select("Welcome to Day Planner") do |menu|
             menu.choice "Login"
             menu.choice "Sign Up"
+            menu.choice "Exit"
           end
 
   case ans
@@ -18,6 +20,8 @@ def startmenu()
     login_prompt()
   when "Sign Up"
     signup_prompt()
+  when "Exit"
+    true
   end
 end
 
@@ -95,6 +99,7 @@ def user_menu(user_id)
   when "Logout"
     startmenu()
   end
+<<<<<<< HEAD
 end
 
 <<<<<<< HEAD

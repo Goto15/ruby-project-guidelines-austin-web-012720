@@ -1,4 +1,6 @@
 def event_menu(user_id)
+    display_events(user_id)
+
     ans = TTY::Prompt.new.select("EVENT MENU: ", required: true) do |menu|
       menu.choice "Add"
       menu.choice "Delete"
@@ -52,4 +54,18 @@ def delete_all_events_menu(user_id)
     end
 
     event_menu(user_id)
+end
+
+def display_events(user_id)
+    # Display params
+      puts `clear`
+      width = (33)#(TermInfo.screen_size[1]).round
+      height = (20)#(TermInfo.screen_size[0]-10).round
+
+      events = Event.all.map {|event| event.name.to_s + " " + event.date.to_s }
+        
+      box = TTY::Box.frame(width: width, height: height , title: {top_center: " All Events ", bottom_left: " Current User: " + user_id.to_s + " "}) do
+          events.join("\n")
+      end
+      print box
 end

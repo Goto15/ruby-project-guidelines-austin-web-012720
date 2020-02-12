@@ -14,5 +14,5 @@ require 'pry'
 
 startmenu()
 
-binding.pry
+# binding.pry
 puts "Have a nice day!"
