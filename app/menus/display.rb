@@ -1,5 +1,5 @@
 require "tty-box"
-require 'terminfo'
+require "terminfo"
 require './models'
 
 def display_items(user_id)

@@ -32,6 +32,7 @@ GEM
     rack-protection (2.0.7)
       rack
     require_all (3.0.0)
+    ruby-terminfo (0.1.1)
     sinatra (2.0.7)
       mustermann (~> 1.0)
       rack (~> 2.0)
@@ -42,8 +43,17 @@ GEM
       sinatra (>= 1.0)
     slop (3.6.0)
     sqlite3 (1.3.13)
+    strings (0.1.8)
+      strings-ansi (~> 0.1)
+      unicode-display_width (~> 1.5)
+      unicode_utils (~> 1.4)
+    strings-ansi (0.2.0)
     thread_safe (0.3.6)
     tilt (2.0.10)
+    tty-box (0.5.0)
+      pastel (~> 0.7.2)
+      strings (~> 0.1.6)
+      tty-cursor (~> 0.7)
     tty-color (0.5.1)
     tty-cursor (0.7.1)
     tty-prompt (0.20.0)
@@ -57,6 +67,8 @@ GEM
     tty-screen (0.7.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    unicode-display_width (1.6.1)
+    unicode_utils (1.4.0)
     wisper (2.0.1)
 
 PLATFORMS
@@ -65,8 +77,10 @@ PLATFORMS
 DEPENDENCIES
   pry
   require_all
+  ruby-terminfo
   sinatra-activerecord
   sqlite3
+  tty-box
   tty-prompt
 
 BUNDLED WITH

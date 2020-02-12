@@ -34,7 +34,6 @@ ActiveRecord::Schema.define(version: 20200210204805) do
     t.string  "name"
     t.integer "location"
     t.string  "contact"
-    t.string  "default_items"
   end
 
 end
