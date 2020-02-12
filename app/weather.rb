@@ -1,10 +1,6 @@
 require 'json'
 require 'net/http'
 require 'open-uri'
-require_relative './models/item.rb'
-
-location = 78702
-location2 = 78750
 
 def generate_query_url(zip_code)
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
