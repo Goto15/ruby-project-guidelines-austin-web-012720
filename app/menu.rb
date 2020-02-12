@@ -3,11 +3,9 @@ require_relative '../app/models/user.rb'
 require_relative '../app/models/item.rb'
 require 'tty-prompt'
 
-##### WORKING BUT TESTING NEEDED #####
-
 def startmenu()
   ans =   TTY::Prompt.new.select("Welcome to Day Planner") do |menu|
-            menu.choice "Login"
+            menu.choice "Login" 
             menu.choice "Sign Up"
           end
 
@@ -43,7 +41,6 @@ end
 def signup_prompt()
   signup = TTY::Prompt.new()
   name = signup.ask("Name: ", required: true)
-
   name_check(name)
 
   location =  signup.ask("Enter 5 Digit Zip Code: ", required: true) do |zip|
@@ -247,7 +244,8 @@ def add_day_menu(user_id)
   else
     Day.create(user_id: user_id, date: date)
   end
-    day_menu(user_id)
+
+  day_menu(user_id)
 end
 
 def delete_day_menu(user_id)
