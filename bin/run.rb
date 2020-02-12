@@ -1,6 +1,8 @@
 require_relative '../config/environment.rb'
-require_relative '../app/menu.rb'
 require_relative '../app/weather.rb'
+
+# ----- Menus ---- #
+require_relative '../app/menus/menu.rb'
 
 # ----- Models ----- #
 require_relative '../app/models/event.rb'
@@ -13,4 +15,4 @@ require 'pry'
 startmenu()
 
 binding.pry
-puts "HELLO WORLD"
+puts "Have a nice day!"
