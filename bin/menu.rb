@@ -77,99 +77,100 @@ end
 def user_menu(user_id)
   user_menu = TTY::Prompt.new()
   ans = user_menu.select("USER MENU: ", required: true) do |menu|
-    menu.choice "ADD", 1 #add_menu(user_id)
-    menu.choice "VIEW", 2 #view_menu(user_id)
-    menu.choice "DELTE", 3 #delete_menu(user_id)
-    menu.choice "Logout", 4 #startmenu
+    menu.choice "Items", 1
+    menu.choice "Events", 2
+    menu.choice "Day to Day", 3
+    menu.choice "Logout", 4
   end
 
   case ans
   when 1
-    add_menu(user_id)
+    item_menu(user_id)
   when 2
-    view_menu(user_id)
+    event_menu(user_id)
   when 3
-    delete_menu(user_id)
+    day_menu(user_id)
   when 4
     startmenu()
   end
 end
 
-def add_menu(user_id)
-  add_menu = TTY::Prompt.new()
-  ans = add_menu.select("ADD: ", required: true) do |menu|
-    menu.choice "Items", 1 #add_items(user_id)
-    menu.choice "Events", 2 #add_events(user_id)
-    menu.choice "Day", 3 #add_day(user_id)
-    menu.choice "User Menu", 4 #user_menu(user_id)
+def item_menu(user_id)
+  i_menu = TTY::Prompt.new()
+  ans = user_menu.select("ITEM MENU: ", required: true) do |menu|
+    menu.choice "Add", 1
+    menu.choice "Delete", 2
+    menu.choice "Clear", 3
+    menu.choice "Back", 4
   end
+
   case ans
   when 1
-    add_items(user_id)
-  when 2
-    add_events(user_id)
-  when 3
-    add_day(user_id)
-  when 4
-    user_menu(user_id)
-  end
-end
+    item = i_menu.ask("Enter Item Name: ", required: true)
+    type_menu = TTY::Prompt.new
+    array = type_menu.multiselect("Type", required: true) do |type|
+      menu.choice "Daily",
+      menu.choice "Thunderstorm" ,
+      menu.choice "Rain",
+      menu.choice "Snow",
+      menu.choice "Clear",
+      menu.choice "Overcast",
+      menu.choice "Hot",
+      menu.choice "Cold",
+    end
+    i = Item.new(name: item, weather: array.join(", "))
+    i.save
 
-# def edit_menu(user_id)
-#   edit_menu = TTY:Prompt.new()
-#   edit_menu.select("EDIT: ", required: true) do |menu|
-#     menu.choice "Location", edit_items(user_id)
-#     menu.choice "Events", edit_events(user_id)
-#     menu.choice "Itenerary", edit_itenerary(user_id)
-#     menu.choice "Main Menu", main_menu(user_id)
-#   end
-# end
-
-def view_menu(user_id)
-  view_menu = TTY::Prompt.new()
-  ans = view_menu.select("VIEW: ", required: true) do |menu|
-    menu.choice "Items", 1 #view_items(user_id)
-    menu.choice "Events", 2 #view_events(user_id)
-    menu.choice "Day", 3 #view_day(user_id)
-    menu.choice "User Menu", 4 #user_menu(user_id)
-  end
-  case ans
-  when 1
-    view_items(user_id)
   when 2
-    view_events(user_id)
+    item = prompt.ask("Enter Item Name: ", required: true)
   when 3
-    view_day(user_id)
+    bool = prompt.yes?("Are you sure you want to clear [Items]?", required: true)
   when 4
     user_menu(user_id)
   end
 
 end
 
-def delete_menu(user_id)
-  delete_menu = TTY::Prompt.new()
-  ans = delete_menu.select("DELETE: ", required: true) do |menu|
-    menu.choice "Items", 1 #delete_items(user_id)
-    menu.choice "Events", 2 #delete_events(user_id)
-    menu.choice "Day", 3 #delete_day(user_id)
-    menu.choice "User Menu", 4 #main_menu(user_id)
+def event_menu(user_id)
+  e_menu = TTY::Prompt.new()
+  ans = user_menu.select("EVENT MENU: ", required: true) do |menu|
+    menu.choice "Add", 1
+    menu.choice "Delete", 2
+    menu.choice "Clear", 3
+    menu.choice "Back", 4
   end
+
   case ans
   when 1
-    delete_items(user_id)
+    item = prompt.ask("Enter Event Name: ", required: true)
   when 2
-    delete_events(user_id)
+    item = prompt.ask("Enter Event Name: ", required: true)
   when 3
-    delete_day(user_id)
+    bool = prompt.yes?("Are you sure you want to clear [Events]?", required: true)
   when 4
     user_menu(user_id)
   end
+
 end
 
-def add_items(user_id)
-  add_item = TTY::Prompt.new()
-  add_item.select("Item Type: ", required: true) do |menu|
-    menu.choice "Daily"
-    menu.choice ""
+def day_menu(user_id)
+  d_menu = TTY::Prompt.new()
+  ans = user_menu.select("DAY MENU: ", required: true) do |menu|
+    menu.choice "Add", 1
+    menu.choice "Delete", 2
+    menu.choice "Clear", 3
+    menu.choice "Back", 4
   end
+
+  case ans
+  when 1
+    item = prompt.ask("Enter Date: (mm/dd):", required: true)
+  when 2
+    item = prompt.ask("Enter Date: (mm/dd):", required: true)
+  when 3
+    bool = prompt.yes?("Are you sure you want to clear [Days]?", required: true)
+  when 4
+    user_menu(user_id)
+  end
+
 end
