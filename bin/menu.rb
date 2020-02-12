@@ -1,48 +1,78 @@
 require_relative '../config/environment'
-
 require_relative '../app/models/user.rb'
-
 require 'tty-prompt'
 
 def startmenu()
-  start = TTY::Prompt.new
-  ans = start.select("Welcome to Day Planner", requied: true) do |menu|
-      menu.choice "Login", 1 #login_prompt()
-      menu.choice "Sign Up", 2 #signup_prompt()
-  end
+  ans =   TTY::Prompt.new.select("Welcome to Day Planner") do |menu|
+            menu.choice "Login"
+            menu.choice "Sign Up"
+          end
 
   case ans
-  when 1
+  when "Login"
     login_prompt()
-  when 2
+  when "Sign Up"
     signup_prompt()
   end
 end
 
 def login_prompt()
-  login = TTY::Prompt.new()
-  username = login.ask("Name: ", required: true)
-  user = User.where(name: username)[0]
-  user_menu(user.id)
+  username = TTY::Prompt.new.ask("Name: ", required: true)
+  if (User.where(name: username).length != 0)
+    user = User.where(name: username)[0]
+    user_menu(user.id)
+
+  else 
+    puts "Your account does not exist. Did you mispell it?"
+    ans =   TTY::Prompt.new.select("") do |menu|
+      menu.choice "Sign Up"
+      menu.choice "Try Again"
+    end
+
+    case ans
+      when "Sign Up"
+        signup_prompt()
+      when "Try Again"
+        login_prompt()
+    end
+  end
 end
 
 def signup_prompt()
   signup = TTY::Prompt.new()
   name = signup.ask("Name: ", required: true)
+
+  name_check(name)
+
   location = signup.ask("Enter Zip Code: ", required: true)
   contact = signup.ask("Enter Email: ", required: true)
-  signup(name, location, contact) # if !User.all.find(user)
+  signup(name, location, contact)
+end
+
+def name_check(name)
+  if (User.where(name: name).length != 0)
+    puts "Someone with your name exists already. Please login or try again."
+
+    ans =   TTY::Prompt.new.select("") do |menu|
+      menu.choice "Login"
+      menu.choice "Try Again"
+    end
+
+    case ans
+      when "Login"
+        login_prompt()
+      when "Try Again"
+        signup_prompt()
+    end
+  end
 end
 
 def signup(name, location, contact)
-  user = User.new()
-  user.name = name
-  user.location = location
-  user.contact = contact
-  user.save
+  user = User.create(name: name, location: location, contact: contact)
   user_menu(user.id)
 end
 
+##### STILL NEEDS TESTING #####
 
 def user_menu(user_id)
   user_menu = TTY::Prompt.new()
