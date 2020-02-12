@@ -13,12 +13,13 @@ def today_formatted()
 end
   
 def day_menu(user_id)
-    view_day(user_id)
+    display_day(user_id)
   
     ans = TTY::Prompt.new.select("DAY MENU: ", required: true) do |menu|
       menu.choice "Add"
       menu.choice "Delete"
       menu.choice "Back"
+      menu.choice "Send"
       menu.choice "Clear"
     end
   
@@ -31,6 +32,8 @@ def day_menu(user_id)
       send_day_to_device(user_id)
     when "Back"
       user_menu(user_id)
+    when "Send"
+      send_day_to_device(user_id)
     when "Clear"
       delete_all_days_menu(user_id)
     end
@@ -76,35 +79,56 @@ def delete_all_days_menu(user_id)
   
     day_menu(user_id)
 end
-  
-def view_day(user_id)
-    today_date = today_formatted()
-    events =  Event.where(date: today_date).map do |event|
-                event.name
-              end
-  
-    forecast = generate_forecast(User.find(user_id).location)
-    weather = forecast[:weather][0]
-  
+
+def get_daily_event_names(date)
+  Event.where(date: date).map do |event|
+    event.name
+  end
+end
+
+def get_daily_item_names(user_id, weather)
     items = []
+    
     Item.where(user_id: user_id, weather: "Daily").each do |item|
-      items << item.name
+        items << item.name
     end
-  
+
     Item.where(user_id: user_id, weather: weather).each do |item|
-      items << item.name
+        items << item.name
     end
-  
-    puts "-------- #{today_date} --------"
-    puts "----------- Events ------------"
-    puts events
-    puts "------------ Items ------------"
-    puts items
-    puts "------------ Weather ------------"
-    puts weather + "\nHigh of " + forecast[:max].to_s + ",\nLow of " + forecast[:min].to_s + "."
+
+    items
 end
   
 def send_day_to_device(user_id)
     puts "Sending your day to your email or your phone..."
     day_menu(user_id)
+end
+
+def display_day(user_id)
+  # Display params
+    puts `clear`
+    width = (33)#(TermInfo.screen_size[1]).round
+    height = (20)#(TermInfo.screen_size[0]-10).round
+
+  # Day params
+    date = today_formatted()
+    events = get_daily_event_names(date)
+    forecast = generate_forecast(User.find(user_id).location)
+    weather = forecast[:weather][0]
+    items = get_daily_item_names(user_id, weather)
+
+    output = <<-OUT
+-------- Today's Events -------
+#{events.join("\n")}
+------- Items for Today -------
+#{items.join("\n")}
+------ Weather for Today ------
+#{weather}
+OUT
+      
+    box = TTY::Box.frame(width: width, height: height , title: {top_center: " Today's Itinerary ", bottom_left: " Current User: " + user_id.to_s + " "}) do
+        output
+    end
+    print box
 end
