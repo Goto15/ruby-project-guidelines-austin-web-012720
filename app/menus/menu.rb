@@ -61,7 +61,6 @@ def signup_prompt()
   end
 
   contact = prompt.ask("Enter Email: ", required: true)
-
     
   signup(name, location, contact)
 end
