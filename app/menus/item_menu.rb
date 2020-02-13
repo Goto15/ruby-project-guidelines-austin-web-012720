@@ -45,11 +45,15 @@ def delete_item_menu(user_id)
             item.name
           end
           
-  to_delete = TTY::Prompt.new.multi_select("Your items: ", items)
+    if items.empty?
+      TTY::Prompt.new.keypress("You have no items to delete! Press any key to go back.")
+    else
+      to_delete = TTY::Prompt.new.multi_select("Your items: ", items)
 
-  to_delete.each do |item|
-    Item.delete_all(name: item, user_id: user_id)
-  end
+      to_delete.each do |item|
+        Item.delete_all(name: item, user_id: user_id)
+      end
+    end
 
   item_menu(user_id)
 end

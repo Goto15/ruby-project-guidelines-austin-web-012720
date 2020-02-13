@@ -58,11 +58,15 @@ def delete_day_menu(user_id)
     days =  Day.all.map do |day|
                 day.date
             end.uniq
+
+    if days.empty?
+      TTY::Prompt.new.keypress("You have no plans to delete! Press any key to go back.")
+    else
+      to_delete = TTY::Prompt.new.multi_select("Your days: ", days)
     
-    to_delete = TTY::Prompt.new.multi_select("Your days: ", days)
-  
-    to_delete.each do |day|
-      Event.delete_all(date: day)
+      to_delete.each do |day|
+        Event.delete_all(date: day)
+      end
     end
   
     day_menu(user_id)

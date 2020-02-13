@@ -35,10 +35,14 @@ def delete_event_menu(user_id)
     event.name
   end
 
-  to_delete = TTY::Prompt.new.multi_select("Your items: ", events)
+  if events.empty?
+    TTY::Prompt.new.keypress("You have no events to delete! Press any key to go back.")
+  else
+    to_delete = TTY::Prompt.new.multi_select("Your events: ", events)
 
-  to_delete.each do |event|
-    Event.delete_all(name: event)
+    to_delete.each do |event|
+      Event.delete_all(name: event)
+    end
   end
 
   event_menu(user_id)
@@ -49,7 +53,7 @@ def delete_all_events_menu(user_id)
   if ans
     ans = TTY::Prompt.new.yes?("Final chance: Are you sure you want to delete all your events?")
     if ans
-    Event.delete_all(user_id: user_id)
+      Event.delete_all()
     end
   end
 
