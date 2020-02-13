@@ -9,3 +9,5 @@ gem "require_all"
 gem "tty-prompt"
 gem "tty-box"
 #gem "terminfo"
+gem "tty-font"
+gem 'pastel'

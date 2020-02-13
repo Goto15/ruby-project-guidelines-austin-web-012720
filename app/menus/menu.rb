@@ -1,15 +1,18 @@
 require_relative '../../config/environment'
 require_relative '../weather.rb'
-require 'tty-prompt'
+require 'tty-font'
+require 'pastel'
 
 # ------ Specific Menus ------ #
 require_relative './day_menu.rb'
 require_relative './event_menu.rb'
 require_relative './item_menu.rb'
+require 'tty-font'
 
 def startmenu()
+  display_start_menu()
   ans = TTY::Prompt.new.select("Welcome to Day Planner") do |menu|
-          menu.choice "Login" 
+          menu.choice "Login"
           menu.choice "Sign Up"
           menu.choice "Exit"
         end
@@ -24,6 +27,20 @@ def startmenu()
   end
 end
 
+def  display_start_menu()
+  puts `clear`
+  font = TTY::Font.new(:starwars)
+  pastel = Pastel.new()
+  height = 20
+  width = 100
+
+  box = TTY::Box.frame(width: width, height: height) do
+      pastel.magenta(font.write("Welcome"))
+  end
+  print box
+
+end
+
 def login_prompt()
   username = TTY::Prompt.new.ask("Name: ", required: true)
 
@@ -31,7 +48,7 @@ def login_prompt()
   if (User.where(name: username).length != 0)
     user = User.where(name: username)[0]
     user_menu(user.id)
-  else 
+  else
     puts "Your account does not exist. Did you mispell it?"
     ans =   TTY::Prompt.new.select("") do |menu|
       menu.choice "Sign Up"
@@ -62,7 +79,7 @@ def signup_prompt()
 
   contact = prompt.ask("Enter Email: ", required: true)
 
-    
+
   signup(name, location, contact)
 end
 
@@ -89,7 +106,25 @@ def signup(name, location, contact)
   user_menu(user.id)
 end
 
+def display_user_menu(user_id)
+  puts `clear`
+  user = User.find(user_id)
+  output = <<-OUT
+Username: #{user.name}
+Location: #{user.location}
+Contact: #{user.contact}
+OUT
+width = (33)
+height = (5)
+  box = TTY::Box.frame(width: width, height: height , title: {top_center: " CURRENT USER "}) do
+      output
+  end
+  print box
+
+end
+
 def user_menu(user_id)
+  display_user_menu(user_id)
   ans = TTY::Prompt.new.select("USER MENU: ") do |menu|
     menu.choice "Items"
     menu.choice "Events"

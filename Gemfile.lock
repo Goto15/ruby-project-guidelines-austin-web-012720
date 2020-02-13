@@ -55,6 +55,7 @@ GEM
       tty-cursor (~> 0.7)
     tty-color (0.5.1)
     tty-cursor (0.7.1)
+    tty-font (0.4.0)
     tty-prompt (0.20.0)
       necromancer (~> 0.5.0)
       pastel (~> 0.7.0)
@@ -74,11 +75,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  pastel
   pry
   require_all
   sinatra-activerecord
   sqlite3
   tty-box
+  tty-font
   tty-prompt
 
 BUNDLED WITH

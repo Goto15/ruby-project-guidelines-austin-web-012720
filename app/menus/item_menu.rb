@@ -31,7 +31,7 @@ def add_item_menu(user_id)
     type.choice "Rain"
     type.choice "Snow"
     type.choice "Clear"
-    type.choice "Overcast"
+    type.choice "Clouds"
     type.choice "Hot"
     type.choice "Cold"
   end

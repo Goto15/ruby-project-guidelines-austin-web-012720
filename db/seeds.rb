@@ -1,5 +1,5 @@
 User.create(name: "Ben", location: 78702, contact: "9798140433")
-User.create(name: "Jaq", location: 78754, contact: "9798143333")
+User.create(name: "Jaq", location: 78774, contact: "9798143333")
 
 Event.create(day_id: 1, name: "FlatIron", date: "0212")
 Event.create(day_id: 2, name: "bus", date: "0301")

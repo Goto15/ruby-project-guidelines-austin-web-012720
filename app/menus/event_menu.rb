@@ -18,7 +18,7 @@ def event_menu(user_id)
   when "Back"
     user_menu(user_id)
   end
-  
+
 end
 
 def add_event_menu(user_id)
@@ -32,7 +32,7 @@ end
 
 def delete_event_menu(user_id)
   events = Event.all.map do |event|
-    event.name
+    event.name + " - " +event.date
   end
 
   if events.empty?
@@ -41,7 +41,8 @@ def delete_event_menu(user_id)
     to_delete = TTY::Prompt.new.multi_select("Your events: ", events)
 
     to_delete.each do |event|
-      Event.delete_all(name: event)
+      event_and_date = event.split(" - ")
+      Event.delete_all(name: event_and_date[0], date: event_and_date[1] )
     end
   end
 
@@ -67,7 +68,7 @@ def display_events(user_id)
   height = (20)
 
   events = Event.all.map {|event| event.name.to_s + " " + event.date.to_s }
-    
+
   box = TTY::Box.frame(width: width, height: height , title: {top_center: " All Events ", bottom_left: " Current User: " + user_id.to_s + " "}) do
       events.join("\n")
   end
