@@ -20,9 +20,9 @@ def item_menu(user_id)
   when "Back"
     user_menu(user_id)
   end
-  
+
 end
-  
+
 def add_item_menu(user_id)
   name = TTY::Prompt.new.ask("Enter Item Name: ", required: true)
   conditions = TTY::Prompt.new.select("Type", required: true) do |type|
@@ -39,12 +39,12 @@ def add_item_menu(user_id)
 
   item_menu(user_id)
 end
-  
+
 def delete_item_menu(user_id)
   items = Item.all.select('name').where(user_id: user_id).map do |item|
             item.name
           end
-          
+
     if items.empty?
       TTY::Prompt.new.keypress("You have no items to delete! Press any key to go back.")
     else
@@ -76,15 +76,21 @@ def display_items(user_id)
   w = (33)
   h = (15)
 
-  forecast = generate_forecast(User.find(user_id).location)
-  weather = forecast[:weather][0]
-  daily_items = Item.where(user_id: user_id, weather: "Daily").map do |item| 
-                  item.name
-                end
+  # forecast = generate_forecast(User.find(user_id).location)
+  # weather = forecast[:weather][0]
+  items = Item.where(user_id: user_id)
+  daily_items = items.select {|item| item.weather == "Daily"}
+  weather_items = items - daily_items
+  daily_items = daily_items.collect{|item| item.name}
+  weather_items = weather_items.collect{|item| item.name + ": " + item.weather}
 
-  weather_items = Item.where(user_id: user_id, weather: weather).map do |item|
-                    item.name
-                  end
+
+
+
+
+  # weather_items = Item.where(user_id: user_id, weather: weather).map do |item|
+  #                   item.name
+  #                 end
 
   output = "--------- Daily Items ---------\n" + daily_items.join("\n") + "\n-------- Weather Items --------\n" + weather_items.join("\n")
   box = TTY::Box.frame(width: w, height: h , title: {top_center: ' ITEM MENU ', bottom_left: " Current User: " + user_id.to_s + " "}) do
@@ -93,4 +99,3 @@ def display_items(user_id)
   print box
 
 end
-  
