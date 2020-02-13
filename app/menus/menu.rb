@@ -7,7 +7,7 @@ require 'pastel'
 require_relative './day_menu.rb'
 require_relative './event_menu.rb'
 require_relative './item_menu.rb'
-require 'tty-font'
+require 'tty-prompt'
 
 def startmenu()
   display_start_menu()
@@ -78,8 +78,6 @@ def signup_prompt()
   end
 
   contact = prompt.ask("Enter Email: ", required: true)
-
-
   signup(name, location, contact)
 end
 

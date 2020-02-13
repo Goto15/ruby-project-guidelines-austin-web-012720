@@ -76,21 +76,11 @@ def display_items(user_id)
   w = (33)
   h = (15)
 
-  # forecast = generate_forecast(User.find(user_id).location)
-  # weather = forecast[:weather][0]
   items = Item.where(user_id: user_id)
   daily_items = items.select {|item| item.weather == "Daily"}
   weather_items = items - daily_items
   daily_items = daily_items.collect{|item| item.name}
   weather_items = weather_items.collect{|item| item.name + ": " + item.weather}
-
-
-
-
-
-  # weather_items = Item.where(user_id: user_id, weather: weather).map do |item|
-  #                   item.name
-  #                 end
 
   output = "--------- Daily Items ---------\n" + daily_items.join("\n") + "\n-------- Weather Items --------\n" + weather_items.join("\n")
   box = TTY::Box.frame(width: w, height: h , title: {top_center: ' ITEM MENU ', bottom_left: " Current User: " + user_id.to_s + " "}) do

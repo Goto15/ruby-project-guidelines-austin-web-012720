@@ -90,15 +90,31 @@ def get_daily_event_names(date)
   end
 end
 
-def get_daily_item_names(user_id, weather)
+def get_daily_item_names(user_id, forecast)
     items = []
     
+    # Gets daily items
     Item.where(user_id: user_id, weather: "Daily").each do |item|
-        items << item.name
+      items << item.name
     end
 
-    Item.where(user_id: user_id, weather: weather).each do |item|
+    # Gets weather based items
+    Item.where(user_id: user_id, weather: forecast[:weather][0]).each do |item|
+      items << item.name
+    end
+
+    #Gets Hot weather items
+    if (forecast[:max] > 79)
+      Item.where(user_id: user_id, weather: "Hot"). each do |item|
         items << item.name
+      end
+    end
+
+    # Gets Cold weather items
+    if (forecast[:min] < 60)
+      Item.where(user_id: user_id, weather: "Cold").each do |item|
+        items << item.name
+      end
     end
 
     items
@@ -119,8 +135,7 @@ def display_day(user_id)
     date = today_formatted()
     events = get_daily_event_names(date)
     forecast = generate_forecast(User.find(user_id).location)
-    weather = forecast[:weather][0]
-    items = get_daily_item_names(user_id, weather)
+    items = get_daily_item_names(user_id, forecast)
 
     output = <<-OUT
 -------- Today's Events -------
@@ -128,7 +143,9 @@ def display_day(user_id)
 ------- Items for Today -------
 #{items.join("\n")}
 ------ Weather for Today ------
-#{weather}
+#{forecast[:weather][0]}
+Today's low: #{forecast[:min]} F
+Today's max: #{forecast[:max]} F
 OUT
       
     box = TTY::Box.frame(width: width, height: height , title: {top_center: " Today's Itinerary ", bottom_left: " Current User: " + user_id.to_s + " "}) do
