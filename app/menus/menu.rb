@@ -48,16 +48,21 @@ def login_prompt()
 end
 
 def signup_prompt()
-  signup = TTY::Prompt.new()
-  name = signup.ask("Name: ", required: true)
+  prompt = TTY::Prompt.new()
+  name = prompt.ask("Name: ", required: true)
   name_check(name)
 
   # Only validates for 5 digit long zip codes
-  location =  signup.ask("Enter 5 Digit Zip Code: ", required: true) do |zip|
+  location = "123456"
+  while location.length > 5
+    location =  prompt.ask("Enter 5 Digit Zip Code: ", required: true) do |zip|
                 zip.validate (/^\d{5}/)
               end
-  contact = signup.ask("Enter Email: ", required: true)
+  end
 
+  contact = prompt.ask("Enter Email: ", required: true)
+
+    
   signup(name, location, contact)
 end
 
