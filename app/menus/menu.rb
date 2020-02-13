@@ -1,20 +1,23 @@
 require_relative '../../config/environment'
 require_relative '../weather.rb'
+require 'tty-prompt'
 require 'tty-font'
 require 'pastel'
 
 # ------ Specific Menus ------ #
-require_relative './day_menu.rb'
 require_relative './event_menu.rb'
 require_relative './item_menu.rb'
-require 'tty-prompt'
+require_relative './settings_menu.rb'
+require_relative './day_menu.rb'
+
+
 
 def startmenu()
   display_start_menu()
   ans = TTY::Prompt.new.select("Welcome to Day Planner") do |menu|
           menu.choice "Login"
           menu.choice "Sign Up"
-          menu.choice "Exit"
+          menu.choice "↵ Exit", "Exit"
         end
 
   case ans
@@ -104,30 +107,14 @@ def signup(name, location, contact)
   user_menu(user.id)
 end
 
-def display_user_menu(user_id)
-  puts `clear`
-  user = User.find(user_id)
-  output = <<-OUT
-Username: #{user.name}
-Location: #{user.location}
-Contact: #{user.contact}
-OUT
-width = (33)
-height = (5)
-  box = TTY::Box.frame(width: width, height: height , title: {top_center: " CURRENT USER "}) do
-      output
-  end
-  print box
-
-end
 
 def user_menu(user_id)
-  display_user_menu(user_id)
+  display_day(user_id)
   ans = TTY::Prompt.new.select("USER MENU: ") do |menu|
     menu.choice "Items"
     menu.choice "Events"
-    menu.choice "Day to Day"
-    menu.choice "Logout"
+    menu.choice "Settings"
+    menu.choice "↵ Logout", "Logout"
   end
 
   case ans
@@ -135,8 +122,8 @@ def user_menu(user_id)
     item_menu(user_id)
   when "Events"
     event_menu(user_id)
-  when "Day to Day"
-    day_menu(user_id)
+  when "Settings"
+    user_settings_menu(user_id)
   when "Logout"
     startmenu()
   end

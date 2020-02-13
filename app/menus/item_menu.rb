@@ -7,7 +7,7 @@ def item_menu(user_id)
     menu.choice "Add"
     menu.choice "Delete"
     menu.choice "Clear"
-    menu.choice "Back"
+    menu.choice "↵ Back", "Back"
   end
 
   case ans
@@ -75,13 +75,11 @@ def display_items(user_id)
   puts `clear`
   w = (33)
   h = (15)
-
   items = Item.where(user_id: user_id)
   daily_items = items.select {|item| item.weather == "Daily"}
   weather_items = items - daily_items
   daily_items = daily_items.collect{|item| item.name}
   weather_items = weather_items.collect{|item| item.name + ": " + item.weather}
-
   output = "--------- Daily Items ---------\n" + daily_items.join("\n") + "\n-------- Weather Items --------\n" + weather_items.join("\n")
   box = TTY::Box.frame(width: w, height: h , title: {top_center: ' ITEM MENU ', bottom_left: " Current User: " + user_id.to_s + " "}) do
     output
