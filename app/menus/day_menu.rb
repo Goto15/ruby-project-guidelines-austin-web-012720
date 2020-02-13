@@ -108,8 +108,8 @@ end
 def display_day(user_id)
   # Display params
     puts `clear`
-    width = (33)#(TermInfo.screen_size[1]).round
-    height = (20)#(TermInfo.screen_size[0]-10).round
+    width = (33)
+    height = (20)
 
   # Day params
     date = today_formatted()

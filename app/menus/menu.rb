@@ -1,18 +1,18 @@
 require_relative '../../config/environment'
 require_relative '../weather.rb'
+require 'tty-prompt'
 
 # ------ Specific Menus ------ #
 require_relative './day_menu.rb'
 require_relative './event_menu.rb'
 require_relative './item_menu.rb'
-require 'tty-prompt'
 
 def startmenu()
-  ans =   TTY::Prompt.new.select("Welcome to Day Planner") do |menu|
-            menu.choice "Login" 
-            menu.choice "Sign Up"
-            menu.choice "Exit"
-          end
+  ans = TTY::Prompt.new.select("Welcome to Day Planner") do |menu|
+          menu.choice "Login" 
+          menu.choice "Sign Up"
+          menu.choice "Exit"
+        end
 
   case ans
   when "Login"
@@ -26,6 +26,8 @@ end
 
 def login_prompt()
   username = TTY::Prompt.new.ask("Name: ", required: true)
+
+  # Checks if the user exists already
   if (User.where(name: username).length != 0)
     user = User.where(name: username)[0]
     user_menu(user.id)
@@ -50,10 +52,12 @@ def signup_prompt()
   name = signup.ask("Name: ", required: true)
   name_check(name)
 
+  # Only validates for 5 digit long zip codes
   location =  signup.ask("Enter 5 Digit Zip Code: ", required: true) do |zip|
                 zip.validate (/^\d{5}/)
               end
   contact = signup.ask("Enter Email: ", required: true)
+
   signup(name, location, contact)
 end
 
