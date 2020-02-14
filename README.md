@@ -6,13 +6,17 @@ This is a day planner built for the commandline. It is built using ActiveRecord 
 
 [Ruby](https://www.ruby-lang.org/en/), [ActiveRecord](https://guides.rubyonrails.org/active_record_basics.html), [SQLite3](https://sqlite.org/index.html), [TTY-Prompt](https://github.com/piotrmurach/tty-prompt)
 
-## Installation
+## Installation and Execution
 
 Clone the repo and then navigate to the bin directory via commandline. Once there type 
 
 `ruby run.rb`
 
 This will bring up the Login menu. 
+
+## Contribution Guide
+
+Forks, pull requests are welcome. Submit a PR here and we will take a look at it. 
 
 ## Notable Features
 
