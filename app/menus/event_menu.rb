@@ -5,7 +5,7 @@ def event_menu(user_id)
     menu.choice "Add"
     menu.choice "Delete"
     menu.choice "Clear"
-    menu.choice "Back"
+    menu.choice "⮐ Back"
   end
 
   case ans
@@ -15,7 +15,7 @@ def event_menu(user_id)
     delete_event_menu(user_id)
   when "Clear"
     delete_all_events_menu(user_id)
-  when "Back"
+  when "⮐ Back"
     user_menu(user_id)
   end
 
@@ -23,7 +23,7 @@ end
 
 def add_event_menu(user_id)
   name = TTY::Prompt.new.ask("Enter the event's name: ", required: true)
-  
+
   date = "seven"
   while date.length > 4
     date =  TTY::Prompt.new.ask("Enter the event's date: (MMDD)", required: true) do |day|

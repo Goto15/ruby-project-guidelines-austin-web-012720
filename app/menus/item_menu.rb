@@ -7,7 +7,7 @@ def item_menu(user_id)
     menu.choice "Add"
     menu.choice "Delete"
     menu.choice "Clear"
-    menu.choice "Back"
+    menu.choice "⮐ Back"
   end
 
   case ans
@@ -17,7 +17,7 @@ def item_menu(user_id)
     delete_item_menu(user_id)
   when "Clear"
     delete_all_items_menu(user_id)
-  when "Back"
+  when "⮐ Back"
     user_menu(user_id)
   end
 

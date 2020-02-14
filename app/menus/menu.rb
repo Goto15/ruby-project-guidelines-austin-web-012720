@@ -1,5 +1,7 @@
 require_relative '../../config/environment'
 require_relative '../weather.rb'
+require_relative '../checkzip.rb'
+require 'tty-prompt'
 require 'tty-font'
 require 'pastel'
 
@@ -7,14 +9,14 @@ require 'pastel'
 require_relative './day_menu.rb'
 require_relative './event_menu.rb'
 require_relative './item_menu.rb'
-require 'tty-prompt'
+require_relative './settings_menu.rb'
 
 def startmenu()
   display_start_menu()
   ans = TTY::Prompt.new.select("Welcome to Day Planner") do |menu|
           menu.choice "Login"
           menu.choice "Sign Up"
-          menu.choice "Exit"
+          menu.choice "⮐ Exit"
         end
 
   case ans
@@ -22,7 +24,7 @@ def startmenu()
     login_prompt()
   when "Sign Up"
     signup_prompt()
-  when "Exit"
+  when "⮐ Exit"
     true
   end
 end
@@ -71,10 +73,19 @@ def signup_prompt()
 
   # Only validates for 5 digit long zip codes
   location = "123456"
-  while location.length > 5
-    location =  prompt.ask("Enter 5 Digit Zip Code: ", required: true) do |zip|
-                zip.validate (/^\d{5}/)
-              end
+  # while location.length > 5
+  #   location =  prompt.ask("Enter 5 Digit Zip Code: ", required: true) do |zip|
+  #               zip.validate (/^\d{5}/)
+  #             end
+  # end
+  check = true
+  while check
+    location =  prompt.ask("Enter 5 Digit Zip Code: ", required: true)
+    if is_zip(location)
+      check = false
+    else
+      puts "Invalid Zipcode"
+    end
   end
 
   contact = prompt.ask("Enter Email: ", required: true)
@@ -122,12 +133,12 @@ height = (5)
 end
 
 def user_menu(user_id)
-  display_user_menu(user_id)
+  display_day(user_id)
   ans = TTY::Prompt.new.select("USER MENU: ") do |menu|
     menu.choice "Items"
     menu.choice "Events"
-    menu.choice "Day to Day"
-    menu.choice "Logout"
+    menu.choice "Settings"
+    menu.choice "⮐ Logout"
   end
 
   case ans
@@ -135,9 +146,9 @@ def user_menu(user_id)
     item_menu(user_id)
   when "Events"
     event_menu(user_id)
-  when "Day to Day"
-    day_menu(user_id)
-  when "Logout"
+  when "Settings"
+    user_settings_menu(user_id)
+  when "⮐ Logout"
     startmenu()
   end
 end
